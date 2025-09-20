@@ -31,24 +31,6 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         size++;
     }
 
-    private void resize() {
-        int newCapacity = table.length << 1;
-        Node<K, V>[] oldTable = table;
-        table = new Node[newCapacity];
-        for (Node<K, V> node : oldTable) {
-            while (node != null) {
-                K key = node.key;
-                V value = node.value;
-                int hash = key.hashCode();
-                int index = (key == null) ? 0 : key.hashCode() & (newCapacity - 1);
-                Node<K, V> newNode = new Node<>(key, value, table[index]);
-                table[index] = newNode;
-                node = node.next;
-            }
-        }
-        threshold = newCapacity * loadFactor;
-    }
-
     @Override
     public V getValue(K key) {
         int index = (key == null) ? 0 : key.hashCode() & (table.length - 1);
